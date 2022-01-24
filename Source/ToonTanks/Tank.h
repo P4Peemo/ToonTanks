@@ -17,6 +17,8 @@ class TOONTANKS_API ATank : public ABasePawn
 public:
 	ATank();
 
+	virtual void HandleDestruction() override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -28,6 +30,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	APlayerController *GetTankPlayerController() const { return TankPlayerController; }
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class USpringArmComponent *SpringArm;
@@ -45,5 +48,5 @@ private:
 
 	void Turn(float Value);
 	
-	APlayerController *PlayerControllerRef;
+	APlayerController *TankPlayerController;
 };

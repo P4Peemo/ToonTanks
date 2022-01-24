@@ -3,7 +3,7 @@
 
 #include "BasePawn.h"
 #include "Components/CapsuleComponent.h"
-#include "DrawDebugHelpers.h"
+#include "Projectile.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -24,6 +24,11 @@ ABasePawn::ABasePawn()
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 }
 
+void ABasePawn::HandleDestruction()
+{
+	// TODO Visual/Sound effects
+}
+
 void ABasePawn::RotateTurret(FVector LookAtTarget)
 {
 	FVector ToTarget = LookAtTarget - TurretMesh->GetComponentLocation();
@@ -33,13 +38,8 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 
 void ABasePawn::Fire()
 {
-	DrawDebugSphere(
-		GetWorld(),
-		ProjectileSpawnPoint->GetComponentLocation(),
-		25.f,
-		12,
-		FColor::Red,
-		false,
-		3.f
-	);
+	FVector SpawnPointLocation = ProjectileSpawnPoint->GetComponentLocation();
+	FRotator SpawnPointRotation = ProjectileSpawnPoint->GetComponentRotation();
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, SpawnPointLocation, SpawnPointRotation);
+	Projectile->SetOwner(this);
 }
