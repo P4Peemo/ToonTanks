@@ -30,7 +30,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	APlayerController *GetTankPlayerController() const { return TankPlayerController; }
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class USpringArmComponent *SpringArm;
